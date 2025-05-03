@@ -1,0 +1,135 @@
+﻿@* @model ScientificArticleManagement.Models.User *@
+
+@* @{ *@
+@*     ViewData["Title"] = "Create"; *@
+@* } *@
+
+@* <h1>Create</h1> *@
+
+@* <h4>User</h4> *@
+@* <hr /> *@
+@* <div class="row"> *@
+@*     <div class="col-md-4"> *@
+@*         <form asp-action="Create"> *@
+@*             <div asp-validation-summary="ModelOnly" class="text-danger"></div> *@
+@*             <div class="form-group"> *@
+@*                 <label asp-for="FullName" class="control-label"></label> *@
+@*                 <input asp-for="FullName" class="form-control" /> *@
+@*                 <span asp-validation-for="FullName" class="text-danger"></span> *@
+@*             </div> *@
+@*             <div class="form-group"> *@
+@*                 <label asp-for="BirthDate" class="control-label"></label> *@
+@*                 <input asp-for="BirthDate" class="form-control" /> *@
+@*                 <span asp-validation-for="BirthDate" class="text-danger"></span> *@
+@*             </div> *@
+@*             <div class="form-group"> *@
+@*                 <label asp-for="Email" class="control-label"></label> *@
+@*                 <input asp-for="Email" class="form-control" /> *@
+@*                 <span asp-validation-for="Email" class="text-danger"></span> *@
+@*             </div> *@
+@*             <div class="form-group"> *@
+@*                 <label asp-for="Username" class="control-label"></label> *@
+@*                 <input asp-for="Username" class="form-control" /> *@
+@*                 <span asp-validation-for="Username" class="text-danger"></span> *@
+@*             </div> *@
+@*             <div class="form-group"> *@
+@*                 <label asp-for="Password" class="control-label"></label> *@
+@*                 <input asp-for="Password" class="form-control" /> *@
+@*                 <span asp-validation-for="Password" class="text-danger"></span> *@
+@*             </div> *@
+@*             <div class="form-group"> *@
+@*                 <label asp-for="Role" class="control-label"></label> *@
+@*                 <input asp-for="Role" class="form-control" /> *@
+@*                 <span asp-validation-for="Role" class="text-danger"></span> *@
+@*             </div> *@
+@*             <div class="form-group"> *@
+@*                 <input type="submit" value="Create" class="btn btn-primary" /> *@
+@*             </div> *@
+@*         </form> *@
+@*     </div> *@
+@* </div> *@
+
+@* <div> *@
+@*     <a asp-action="Index">Back to List</a> *@
+@* </div> *@
+
+@* @section Scripts { *@
+@*     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");} *@
+@* } *@
+
+@*                 @model ScientificArticleManagement.Models.User *@
+@* @{ *@
+@*     ViewData["Title"] = (ViewBag.IsAddAdmin == true) ? "Add Admin" : "Add User"; *@
+@* } *@
+
+
+
+
+
+@* /// *@
+@model ScientificArticleManagement.Models.User
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h3>@(ViewBag.IsAddAdmin == true ? "Create Admin" : "Create Author")</h3>
+
+<form asp-action="@(ViewBag.IsAddAdmin == true ? "AddAdmin" : "Add")" method="post" enctype="multipart/form-data">
+    <div class="row">
+        <div class="col-md-6">
+            <label asp-for="Username"></label>
+            <input asp-for="Username" class="form-control" />
+            <span asp-validation-for="Username" class="text-danger"></span> 
+        </div>
+        <div class="col-md-6">
+            <label asp-for="Password"></label>
+            <input asp-for="Password" type="password" class="form-control" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <div class="col-md-6">
+            <label asp-for="FullName"></label>
+            <input asp-for="FullName" class="form-control" />
+            <span asp-validation-for="FullName" class="text-danger"></span>
+        </div>
+        <div class="col-md-6">
+            <label asp-for="Email"></label>
+            <input asp-for="Email" type="email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="col-md-6">
+            <label asp-for="BirthDate"></label>
+            <input asp-for="BirthDate" type="date" class="form-control" />
+            <span asp-validation-for="BirthDate" class="text-danger"></span>
+        </div>
+        <div class="col-md-6">
+            <label asp-for="Address"></label>
+            <input asp-for="Address" class="form-control" />
+            <span asp-validation-for="Address" class="text-danger"></span>
+        </div>
+        <div class="col-md-6">
+            <label asp-for="Gender"></label>
+            <select asp-for="Gender" class="form-control">
+                <option value="">-- Select Gender --</option>
+                <option>Nam</option>
+                <option>Nữ</option>
+                <option>Khác</option>
+            </select>
+            <span asp-validation-for="Gender" class="text-danger"></span>
+        </div>
+        <div class="col-md-6">
+            <label asp-for="Image"></label>
+            <label for="ImageFile">Upload Image</label>
+            <input type="file" name="ImageFile" class="form-control" />
+        </div>
+    </div>
+    <!-- GUI ROLE VE CHO HTTP POST ADD -->
+    <input type="hidden" name="Role" value="@(ViewBag.IsAddAdmin == true ? "Admin" : "Author")" />
+
+    <br />
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

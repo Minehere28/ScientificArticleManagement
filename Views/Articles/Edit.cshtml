@@ -1,0 +1,165 @@
+﻿@* @model ScientificArticleManagement.Models.Article *@
+@* @{ *@
+@*     ViewData["Title"] = "Edit Article"; *@
+@* } *@
+
+@* <style> *@
+@*     .bg-none { *@
+@*         background: none !important; *@
+@*     } *@
+
+@*     .font { *@
+@*         font-family: 'Montserrat', sans-serif; *@
+@*     } *@
+@* </style> *@
+
+@* <div class="col-12 text-center mt-20 hero-section bg-none pb-5"> *@
+@*     <h2 class="mb-4">Edit Article</h2> *@
+@* </div> *@
+
+@* <form asp-action="Edit" method="post" class="font"> *@
+@*     <input type="hidden" asp-for="Id" /> *@
+@*     <input type="hidden" asp-for="UserId" /> *@
+@*     <input type="hidden" asp-for="SubmissionDate" /> *@
+@*     <input type="hidden" asp-for="Status" /> *@
+
+@*     <div asp-validation-summary="ModelOnly" class="text-danger"></div> *@
+
+@*     <div class="mb-3"> *@
+@*         <label asp-for="Title" class="form-label"></label> *@
+@*         <input asp-for="Title" class="form-control" /> *@
+@*         <span asp-validation-for="Title" class="text-danger"></span> *@
+@*     </div> *@
+
+@*     <div class="mb-3"> *@
+@*         <label asp-for="Summary" class="form-label"></label> *@
+@*         <textarea asp-for="Summary" class="form-control" rows="3"></textarea> *@
+@*         <span asp-validation-for="Summary" class="text-danger"></span> *@
+@*     </div> *@
+
+@*     <div class="mb-3"> *@
+@*         <label asp-for="Content" class="form-label"></label> *@
+@*         <textarea asp-for="Content" class="form-control" rows="10"></textarea> *@
+@*         <span asp-validation-for="Content" class="text-danger"></span> *@
+@*     </div> *@
+
+@*     <div class="mb-3"> *@
+@*         <label asp-for="TopicId" class="form-label">Topic</label> *@
+@*         <select asp-for="TopicId" class="form-select" asp-items="ViewBag.Topics"> *@
+@*             <option value="">-- Select Topic --</option> *@
+@*         </select> *@
+@*         <span asp-validation-for="TopicId" class="text-danger"></span> *@
+@*     </div> *@
+
+@*     <div class="d-flex gap-2 mt-4"> *@
+@*         <button type="submit" class="btn btn-primary">Save Changes</button> *@
+@*         @if (ViewBag.Role == "Author") *@
+@*         { *@
+@*             <a href="@Url.Action("MyArticles")" class="btn btn-secondary">Cancel</a> *@
+@*         } *@
+@*         else *@
+@*         { *@
+@*             <a href="@Url.Action("All")" class="btn btn-secondary">Cancel</a> *@
+@*         } *@
+@*     </div> *@
+@* </form> *@
+
+@* @section Scripts { *@
+@*     <partial name="_ValidationScriptsPartial" /> *@
+@* } *@
+
+@model ScientificArticleManagement.Models.Article
+
+@{
+    ViewData["Title"] = "Edit Article";
+}
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger">
+        @foreach (var state in ViewData.ModelState)
+        {
+            foreach (var error in state.Value.Errors)
+            {
+                <p>@state.Key: @error.ErrorMessage</p>
+            }
+        }
+    </div>
+}
+
+<style>
+    .bg-none {
+        background: none !important;
+    }
+
+    .font {
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    .form-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+</style>
+
+<div class="col-12 text-center mt-20 hero-section bg-none pb-5">
+    <h2 class="mb-4">Edit Article</h2>
+</div>
+
+<div class="form-container font">
+    <form asp-action="Edit" method="post">
+        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="UserId" />
+        <input type="hidden" asp-for="SubmissionDate" />
+        <input type="hidden" asp-for="Status" />
+
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="row">
+            <div class="col-md-12 mb-3">
+                <label asp-for="Title" class="form-label"></label>
+                <input asp-for="Title" class="form-control" placeholder="Enter article title" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-12 mb-3">
+                <label asp-for="Summary" class="form-label"></label>
+                <textarea asp-for="Summary" class="form-control" rows="3" placeholder="Brief summary of your article"></textarea>
+                <span asp-validation-for="Summary" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-12 mb-3">
+                <label asp-for="Content" class="form-label"></label>
+                <textarea asp-for="Content" class="form-control" rows="10" placeholder="Full content of your article"></textarea>
+                <span asp-validation-for="Content" class="text-danger"></span>
+            </div>
+
+            <div class="form-group col-md-6">
+                <label asp-for="TopicId" class="form-label">Topic</label>
+                <select asp-for="TopicId" class="form-control"
+                        asp-items="@(new SelectList(ViewBag.Topics as IEnumerable<SelectListItem>, "Value", "Text"))">
+                    <option value="">-- Choose topic --</option>
+                </select>
+                <span asp-validation-for="TopicId" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Current Status</label>
+                <input type="text" class="form-control"
+                       value="@Model.Status" readonly />
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-between mt-4">
+            <a href="@Url.Action("MyArticles")" class="btn btn-secondary">Cancel</a>
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

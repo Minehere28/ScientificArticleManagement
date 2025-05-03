@@ -1,0 +1,234 @@
+﻿@* @model X.PagedList.IPagedList<ScientificArticleManagement.Models.Article> *@
+@* @using X.PagedList.Mvc.Core *@
+
+@* @{ *@
+@*     ViewData["Title"] = "My Articles"; *@
+
+@*     var topics = ViewBag.Topics as Dictionary<int, string>; *@
+@* } *@
+
+@* @if (TempData["Error"] != null) *@
+@* { *@
+@*     <div class="alert alert-danger">@TempData["Error"]</div> *@
+@* } *@
+@* @if (TempData["Success"] != null) *@
+@* { *@
+@*     <div class="alert alert-success">@TempData["Success"]</div> *@
+@* } *@
+
+@* <section class="hero-section d-flex justify-content-center align-items-center" id="section_1"> *@
+@*     <div class="container"> *@
+@*         <div class="row"> *@
+@*             <div class="col-lg-8 col-12 mx-auto"> *@
+@*                 <h1 class="text-white text-center">Discover Scientific Articles</h1> *@
+@*                 <h6 class="text-center">Browse our collection of research papers and publications</h6> *@
+@*             </div> *@
+@*         </div> *@
+@*     </div> *@
+@* </section> *@
+
+@* <section class="explore-section section-padding" id="section_2"> *@
+@*     <div class="container"> *@
+@*         <div class="row"> *@
+@*             <div class="col-12 text-center"> *@
+@*                 <h2 class="mb-4">All Articles</h2> *@
+@*             </div> *@
+@*         </div> *@
+
+@*         <!-- Articles List --> *@
+@*         <div class="row row-cols-1 row-cols-md-3 g-4 mb-5"> *@
+@*             @foreach (var article in Model) *@
+@*             { *@
+@*                 <div class="col col-lg-4 col-md-6 col-12 mb-4 mb-lg-0"> *@
+@*                     <div class="card h-100 shadow-sm"> *@
+@*                         <div class="card-body custom-block bg-white shadow-lg"> *@
+@*                             <h5 class="card-title mb-2">@article.Title</h5> *@
+@*                             <p class="card-text mb-1">👤 Author: @article.Author?.FullName</p> *@
+@*                             <p class="card-text mb-1">👥 Views: @article.CurrentView</p> *@
+@*                             <p class="text-muted mb-1">📅 Submitted: @article.SubmissionDate.ToString("dd/MM/yyyy")</p> *@
+@*                             <p class="mb-2">@article.Summary.Substring(0, Math.Min(100, article.Summary.Length))...</p> *@
+
+@*                             <div class="d-flex justify-content-between"> *@
+@*                                 <a href="@Url.Action("Details", "Articles", new { id = article.Id })" class="btn btn-primary btn-sm bg-design"> *@
+@*                                     View Details *@
+@*                                 </a> *@
+
+@*                                 @if (ViewBag.Role == "Admin") *@
+@*                                 { *@
+@*                                     <div> *@
+@*                                         @if (article.Status == "Pending") *@
+@*                                         { *@
+@*                                             <form method="post" action="@Url.Action("Approve", "Articles")" class="d-inline"> *@
+@*                                                 <input type="hidden" name="id" value="@article.Id" /> *@
+@*                                                 <button type="submit" class="btn btn-success btn-sm me-1">Approve</button> *@
+@*                                             </form> *@
+@*                                             <form method="post" action="@Url.Action("Reject", "Articles")" class="d-inline"> *@
+@*                                                 <input type="hidden" name="id" value="@article.Id" /> *@
+@*                                                 <button type="submit" class="btn btn-danger btn-sm me-1">Reject</button> *@
+@*                                             </form> *@
+@*                                         } *@
+@*                                         <a href="@Url.Action("Edit", "Articles", new { id = article.Id })" class="btn btn-warning btn-sm me-1"> *@
+@*                                             Edit *@
+@*                                         </a> *@
+@*                                     </div> *@
+@*                                 } *@
+@*                             </div> *@
+@*                         </div> *@
+@*                     </div> *@
+@*                 </div> *@
+@*             } *@
+@*         </div> *@
+
+@*         <!-- Pagination --> *@
+@*         <div class="mt-4 d-flex justify-content-center"> *@
+@*             @Html.PagedListPager(Model, page => Url.Action("All", new *@
+@*                 { *@
+@*                     page, *@
+@*                     title = ViewBag.SearchTitle, *@
+@*                     topic = ViewBag.SelectedTopic, *@
+@*                     status = ViewBag.SelectedStatus *@
+@*                 }), *@
+@*                      new PagedListRenderOptions *@
+@*             { *@
+@*                 LiElementClasses = new[] { "page-item" }, *@
+@*                 PageClasses = new[] { "page-link" }, *@
+@*                 UlElementClasses = new[] { "pagination" }, *@
+@*                 DisplayLinkToFirstPage = PagedListDisplayMode.Always, *@
+@*                 DisplayLinkToLastPage = PagedListDisplayMode.Always, *@
+@*                 DisplayLinkToPreviousPage = PagedListDisplayMode.Always, *@
+@*                 DisplayLinkToNextPage = PagedListDisplayMode.Always, *@
+@*                 DisplayLinkToIndividualPages = true, *@
+@*                 MaximumPageNumbersToDisplay = 5 *@
+@*             }) *@
+@*         </div> *@
+@*     </div> *@
+@* </section> *@
+
+@model X.PagedList.IPagedList<ScientificArticleManagement.Models.Article>
+@using X.PagedList.Mvc.Core
+
+@{
+    ViewData["Title"] = "My Articles";
+    var topics = ViewBag.Topics as Dictionary<int, string>;
+}
+
+<section class="hero-section d-flex justify-content-center align-items-center" id="section_1">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-12 mx-auto">
+                <h1 class="text-white text-center">My Submitted Articles</h1>
+                <h6 class="text-center">Manage your research publications</h6>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="explore-section section-padding" id="section_2">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="mb-4">My Articles</h2>
+                @if (!Model.Any())
+                {
+                    <div class="alert alert-info">
+                        You haven't submitted any articles yet.
+                        <a href="@Url.Action("Create")" class="alert-link">Submit your first article</a>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <!-- Articles List -->
+        <div class="row row-cols-1 row-cols-md-3 g-4 mb-5">
+            @foreach (var article in Model)
+            {
+                <div class="col col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body custom-block bg-white shadow-lg">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h5 class="card-title mb-0">@article.Title</h5>
+                                <span class="badge @GetStatusBadgeClass(article.Status)">
+                                    @article.Status
+                                </span>
+                            </div>
+
+                            <p class="text-muted mb-1">
+                                <small>Submitted: @article.SubmissionDate.ToString("dd/MM/yyyy")</small>
+                            </p>
+                            <p class="mb-2">@article.Summary.Substring(0, Math.Min(100, article.Summary.Length))...</p>
+
+                            <div class="d-flex justify-content-between align-items-center">
+                                <a href="@Url.Action("Details", new { id = article.Id })"
+                                   class="btn btn-primary btn-sm">
+                                    View Details
+                                </a>
+
+                                <div class="btn-group">
+                                    @if (article.Status == "Pending" && article.Author.UserId == ViewBag.userId)
+                                    {
+                                        <a href="@Url.Action("Edit", new { id = article.Id })"
+                                           class="btn btn-warning btn-sm">
+                                            Edit
+                                        </a>
+                                        <form asp-action="Delete" method="post" class="d-inline">
+                                            <input type="hidden" name="id" value="@article.Id" />
+                                            @Html.AntiForgeryToken()
+                                            <button type="submit" class="btn btn-danger"
+                                                    onclick="return confirm('Delete this article?')">
+                                                 Delete
+                                            </button>
+                                        </form>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted small">
+                                            @GetStatusMessage(article.Status, article.AcceptedDate, article.DeniedDate)
+                                        </span>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <!-- Pagination -->
+        <div class="mt-4 d-flex justify-content-center">
+            @Html.PagedListPager(Model, page => Url.Action("MyArticles", new
+                {
+                    page,
+                    title = ViewBag.SearchTitle,
+                    topicId = ViewBag.SelectedTopicId,
+                    status = ViewBag.SelectedStatus
+                }), new PagedListRenderOptions
+       {
+           LiElementClasses = new[] { "page-item" },
+           PageClasses = new[] { "page-link" },
+           UlElementClasses = new[] { "pagination" }
+       })
+        </div>
+    </div>
+</section>
+
+@functions {
+    string GetStatusBadgeClass(string status)
+    {
+        return status switch
+        {
+            "Approved" => "bg-success",
+            "Rejected" => "bg-danger",
+            _ => "bg-warning"
+        };
+    }
+
+    string GetStatusMessage(string status, DateTime? acceptedDate, DateTime? deniedDate)
+    {
+        return status switch
+        {
+            "Approved" => $"Approved on {acceptedDate:dd/MM/yyyy}",
+            "Rejected" => $"Rejected on {deniedDate:dd/MM/yyyy}",
+            _ => "Under review"
+        };
+    }
+}

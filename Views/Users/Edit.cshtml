@@ -1,0 +1,166 @@
+﻿@* @model ScientificArticleManagement.Models.User *@
+
+@* @{ *@
+@*     ViewData["Title"] = "Edit"; *@
+@* } *@
+
+@* <h1>Edit</h1> *@
+
+@* <h4>User</h4> *@
+@* <hr /> *@
+@* <div class="row"> *@
+@*     <div class="col-md-4"> *@
+@*         <form asp-action="Edit"> *@
+@*             <div asp-validation-summary="ModelOnly" class="text-danger"></div> *@
+@*             <input type="hidden" asp-for="UserId" /> *@
+@*             <div class="form-group"> *@
+@*                 <label asp-for="FullName" class="control-label"></label> *@
+@*                 <input asp-for="FullName" class="form-control" /> *@
+@*                 <span asp-validation-for="FullName" class="text-danger"></span> *@
+@*             </div> *@
+@*             <div class="form-group"> *@
+@*                 <label asp-for="BirthDate" class="control-label"></label> *@
+@*                 <input asp-for="BirthDate" class="form-control" /> *@
+@*                 <span asp-validation-for="BirthDate" class="text-danger"></span> *@
+@*             </div> *@
+@*             <div class="form-group"> *@
+@*                 <label asp-for="Email" class="control-label"></label> *@
+@*                 <input asp-for="Email" class="form-control" /> *@
+@*                 <span asp-validation-for="Email" class="text-danger"></span> *@
+@*             </div> *@
+@*             <div class="form-group"> *@
+@*                 <label asp-for="Username" class="control-label"></label> *@
+@*                 <input asp-for="Username" class="form-control" /> *@
+@*                 <span asp-validation-for="Username" class="text-danger"></span> *@
+@*             </div> *@
+@*             <div class="form-group"> *@
+@*                 <label asp-for="Password" class="control-label"></label> *@
+@*                 <input asp-for="Password" class="form-control" /> *@
+@*                 <span asp-validation-for="Password" class="text-danger"></span> *@
+@*             </div> *@
+@*             <div class="form-group"> *@
+@*                 <label asp-for="Role" class="control-label"></label> *@
+@*                 <input asp-for="Role" class="form-control" /> *@
+@*                 <span asp-validation-for="Role" class="text-danger"></span> *@
+@*             </div> *@
+@*             <div class="form-group"> *@
+@*                 <input type="submit" value="Save" class="btn btn-primary" /> *@
+@*             </div> *@
+@*         </form> *@
+@*     </div> *@
+@* </div> *@
+
+@* <div> *@
+@*     <a asp-action="Index">Back to List</a> *@
+@* </div> *@
+
+@* @section Scripts { *@
+@*     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");} *@
+@* } *@
+
+<style>
+    .bg-none {
+    background: none !important;
+    }
+
+    .font {
+    font-family: 'Montserrat', sans-serif;
+    }
+
+</style>
+@model ScientificArticleManagement.Models.User
+@{
+    ViewData.ModelState.Remove("Image");
+    @if (ViewBag.Role == "Author") ViewData["Title"] = "Author Edit";
+    else ViewData["Title"] = "Admin Edit";
+}
+<div class="col-12 text-center mt-20 hero-section bg-none pb-5">
+    @if (ViewBag.Role == "Author")
+    {
+        <h2 class="mb-4">Author Edit</h2>
+    }
+    else
+    {
+        <h2 class="mb-4">Admin Edit</h2>
+    }
+</div>
+
+
+<form asp-action="Edit" method="post" enctype="multipart/form-data">
+    <input type="hidden" asp-for="UserId" />
+
+    <div class="row font d-flex flex-column flex-wrap align-content-center gap-2">
+        @if (ViewBag.Role == "Admin")
+        {
+            <div class="col-md-6">
+                <label asp-for="Username"></label>
+                <input asp-for="Username" class="form-control" />
+            </div>
+
+            <div class="col-md-6">
+                <label>Password</label>
+                <input type="password" name="Password" class="form-control" value="@Model.Password" />
+                <span class="text-muted small">Mật khẩu hiện tại sẽ được giữ nguyên nếu không thay đổi</span>
+            </div>
+        }
+        else{
+            <input type="hidden" asp-for="Username" />
+            <input type="hidden" asp-for="Password" />
+        }
+
+        <div class="col-md-6">
+            <label asp-for="FullName"></label>
+            <input asp-for="FullName" class="form-control" />
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="Email"></label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="BirthDate"></label>
+            <input asp-for="BirthDate" type="date" class="form-control" />
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="Address"></label>
+            <input asp-for="Address" class="form-control" />
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="Gender"></label>
+            <select asp-for="Gender" class="form-control">
+                <option value="">-- Chọn giới tính --</option>
+                <option>Nam</option>
+                <option>Nữ</option>
+                <option>Khác</option>
+            </select>
+        </div>
+
+        <div class="col-md-6">
+            <label>Thay ảnh đại diện (nếu muốn)</label>
+            <input type="file" name="ImageFile" class="form-control" />
+        </div>
+
+        @if (!string.IsNullOrEmpty(Model.Image))
+        {
+            <div class="col-md-6 mt-2">
+                <label>Ảnh hiện tại:</label><br />
+                <img src="@Model.Image" width="120" height="120" class="rounded" />
+            </div>
+        }
+    </div>
+
+    <br />
+    <button type="submit" class="btn btn-primary d-flex mx-auto">Save Changes</button>
+</form>
+<div asp-validation-summary="All" class="text-danger mb-3"></div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+@if (ViewBag.DebugLog != null)
+{
+    <pre class="text-danger">@ViewBag.DebugLog</pre>
+}

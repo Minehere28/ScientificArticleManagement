@@ -1,0 +1,60 @@
+﻿@model List<ScientificArticleManagement.Models.User>
+@{
+    ViewData["Title"] = "All User";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2 class="mb-4">👥 Danh sách toàn bộ tài khoản</h2>
+
+<!-- 🔍 Filter Form -->
+<form method="get" class="row g-3 mb-4">
+    <div class="col-md-2">
+        <input type="text" name="username" value="@ViewBag.Username" class="form-control" placeholder="Username" />
+    </div>
+    <div class="col-md-2">
+        <input type="email" name="email" value="@ViewBag.Email" class="form-control" placeholder="Email" />
+    </div>
+    <div class="col-md-2">
+        <select name="role" class="form-select">
+            <option value="">-- Role --</option>
+            <option value="Author" selected="@(ViewBag.RoleFilter == "Author")">Author</option>
+            <option value="Admin" selected="@(ViewBag.RoleFilter == "Admin")">Admin</option>
+        </select>
+    </div>
+    <div class="col-md-2">
+        <button type="submit" class="btn btn-primary w-100">🔍 Lọc</button>
+    </div>
+</form>
+
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>Username</th>
+            <th>Password</th>
+            <th>Email</th>
+            <th>Full Name</th>
+            <th>Role</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.Username</td>
+                <td>@user.Password</td>
+                <td>@user.Email</td>
+                <td>@user.FullName</td>
+                <td>@user.Role</td>
+                <td>
+                    <a class="btn btn-info btn-sm" href="@Url.Action("Details", "User", new { id = user.UserId })">Details</a>
+                    <a class="btn btn-warning btn-sm" href="@Url.Action("Edit", "User", new { id = user.UserId })">Edit</a>
+                    <a class="btn btn-danger btn-sm" href="@Url.Action("Delete", "User", new { id = user.UserId })"
+                       onclick="return confirm('Bạn có chắc muốn xóa người dùng này không?');">
+                        Delete
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

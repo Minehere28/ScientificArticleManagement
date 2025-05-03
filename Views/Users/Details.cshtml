@@ -1,0 +1,51 @@
+﻿<style>
+    .bg-none {
+        background: none !important;
+    }
+
+    .font {
+        font-family: 'Montserrat', sans-serif;
+    }
+
+</style>
+@model ScientificArticleManagement.Models.User
+@{
+    @if (ViewBag.RoleView == "Author") ViewData["Title"] = "Author Details";
+    else ViewData["Title"] = "Admin Details";
+}
+<div class="col-12 text-center mt-20 hero-section bg-none pb-5">
+    @if (ViewBag.RoleView == "Author")
+    {
+        <h2 class="mb-4">Author Details</h2>
+    }
+    else
+    {
+        <h2 class="mb-4">Admin Details</h2>
+    }
+</div>
+
+<div class="row font justify-content-around">
+    <div class=" card custom-block bg-white shadow-lg m-3" style="max-width: 600px;">
+        <div class="card-body">
+            @if (!string.IsNullOrEmpty(Model.Image))
+            {
+                <div class="text-center mb-3">
+                    <img src="@Model.Image" alt="Student Image" width="150" height="150" class="rounded" />
+                </div>
+            }
+
+            <p><strong>Username:</strong> @Model.Username</p>
+            @if (ViewBag.Role == "Admin")
+            {
+                <p><strong>Password:</strong> @Model.Password</p>
+            }
+            <p><strong>Full Name:</strong> @Model.FullName</p>
+            <p><strong>Email:</strong> @Model.Email</p>
+            <p><strong>Address:</strong> @Model.Address</p>
+            <p><strong>Date of Birth:</strong> @Model.BirthDate.ToString("dd/MM/yyyy")</p>
+            <p><strong>Gender:</strong> @Model.Gender</p>
+            <p><strong>Role:</strong> @Model.Role</p>
+        </div>
+    </div>
+</div>
+

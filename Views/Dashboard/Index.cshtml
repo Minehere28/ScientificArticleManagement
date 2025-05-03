@@ -1,0 +1,534 @@
+﻿@* @{ *@
+@*     // ViewBag.Title = "Admin Dashboard – Quản lý Bài viết Khoa học"; *@
+@*     // Layout = "~/Views/Shared/_Layout.cshtml";  *@
+@*     ViewData["Title"] = "Admin Dashboard"; *@
+@* } *@
+@*     <style> *@
+@*         * { *@
+@*             margin: 0; *@
+@*             padding: 0; *@
+@*             box-sizing: border-box; *@
+@*         } *@
+
+@*         body { *@
+@*             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; *@
+@*             background: url('https://images.unsplash.com/photo-1521790945508-bf2a36314e85') no-repeat center center fixed; *@
+@*             background-size: cover; *@
+@*             color: #fff; *@
+@*             line-height: 1.6; *@
+@*         } *@
+
+@*         .overlay { *@
+@*             background-color: rgba(0, 0, 0, 0.7); *@
+@*             min-height: 100vh; *@
+@*             padding: 20px; *@
+@*         } *@
+
+@*         h1 { *@
+@*             text-align: center; *@
+@*             font-size: 36px; *@
+@*             margin-bottom: 30px; *@
+@*             padding: 20px 0; *@
+@*             color: #fcd34d; *@
+@*         } *@
+
+@*         .admin-container { *@
+@*             display: flex; *@
+@*             gap: 20px; *@
+@*             max-width: 1200px; *@
+@*             margin: 0 auto; *@
+@*         } *@
+
+@*         /* Sidebar styles */ *@
+@*         .sidebar { *@
+@*             width: 250px; *@
+@*             background-color: #1e1e2f; *@
+@*             border-radius: 10px; *@
+@*             padding: 20px; *@
+@*             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); *@
+@*             position: sticky; *@
+@*             top: 20px; *@
+@*             height: fit-content; *@
+@*         } *@
+
+@*         .sidebar h2 { *@
+@*             font-size: 20px; *@
+@*             margin: 15px 0; *@
+@*             color: #fcd34d; *@
+@*             display: flex; *@
+@*             align-items: center; *@
+@*             gap: 10px; *@
+@*         } *@
+
+@*         .sidebar-menu { *@
+@*             list-style: none; *@
+@*         } *@
+
+@*         .sidebar-menu li { *@
+@*             margin-bottom: 5px; *@
+@*         } *@
+
+@*         .sidebar-menu a { *@
+@*             display: block; *@
+@*             padding: 10px 15px; *@
+@*             color: #9ae6b4; *@
+@*             text-decoration: none; *@
+@*             border-radius: 5px; *@
+@*             transition: all 0.3s ease; *@
+@*             display: flex; *@
+@*             align-items: center; *@
+@*             gap: 10px; *@
+@*         } *@
+
+@*         .sidebar-menu a:hover { *@
+@*             background-color: #2d2d42; *@
+@*             color: #fff; *@
+@*             transform: translateX(5px); *@
+@*         } *@
+
+@*         .sidebar-menu a.active { *@
+@*             background-color: #3a3a5a; *@
+@*             color: #fff; *@
+@*             border-left: 3px solid #fcd34d; *@
+@*             font-weight: bold; *@
+@*         } *@
+
+@*         /* Main content styles */ *@
+@*         .main-content { *@
+@*             flex: 1; *@
+@*             background-color: #1e1e2f; *@
+@*             border-radius: 10px; *@
+@*             padding: 25px; *@
+@*             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); *@
+@*         } *@
+
+@*         .content-header { *@
+@*             display: flex; *@
+@*             justify-content: space-between; *@
+@*             align-items: center; *@
+@*             margin-bottom: 25px; *@
+@*             padding-bottom: 15px; *@
+@*             border-bottom: 1px solid #333; *@
+@*         } *@
+
+@*         .content-header h2 { *@
+@*             font-size: 24px; *@
+@*             color: #fcd34d; *@
+@*             display: flex; *@
+@*             align-items: center; *@
+@*             gap: 10px; *@
+@*         } *@
+
+@*         .btn { *@
+@*             padding: 8px 15px; *@
+@*             background-color: #4CAF50; *@
+@*             color: white; *@
+@*             border: none; *@
+@*             border-radius: 4px; *@
+@*             cursor: pointer; *@
+@*             transition: background-color 0.3s; *@
+@*         } *@
+
+@*         .btn:hover { *@
+@*             background-color: #45a049; *@
+@*         } *@
+
+@*         /* Table styles */ *@
+@*         .data-table { *@
+@*             width: 100%; *@
+@*             border-collapse: collapse; *@
+@*             margin-top: 20px; *@
+@*         } *@
+
+@*         .data-table th, .data-table td { *@
+@*             padding: 12px 15px; *@
+@*             text-align: left; *@
+@*             border-bottom: 1px solid #333; *@
+@*         } *@
+
+@*         .data-table th { *@
+@*             background-color: #2d2d42; *@
+@*             color: #fcd34d; *@
+@*         } *@
+
+@*         .data-table tr:hover { *@
+@*             background-color: #2d2d42; *@
+@*         } *@
+
+@*         .status-pending { *@
+@*             color: #ffcc00; *@
+@*         } *@
+
+@*         .status-approved { *@
+@*             color: #4CAF50; *@
+@*         } *@
+
+@*         .status-rejected { *@
+@*             color: #f44336; *@
+@*         } *@
+
+@*         .action-btn { *@
+@*             padding: 5px 10px; *@
+@*             margin-right: 5px; *@
+@*             border-radius: 3px; *@
+@*             text-decoration: none; *@
+@*             font-size: 14px; *@
+@*         } *@
+
+@*         .edit-btn { *@
+@*             background-color: #2196F3; *@
+@*             color: white; *@
+@*         } *@
+
+@*         .delete-btn { *@
+@*             background-color: #f44336; *@
+@*             color: white; *@
+@*         } *@
+
+@*         /* Footer */ *@
+@*         .footer { *@
+@*             text-align: center; *@
+@*             margin-top: 40px; *@
+@*             padding: 20px; *@
+@*             font-size: 14px; *@
+@*             color: rgba(255, 255, 255, 0.7); *@
+@*         } *@
+@*     </style> *@
+@* </head> *@
+@* <body> *@
+@*     <div class="overlay"> *@
+@*         <h1>🔧 Bảng Điều Khiển Quản Trị</h1> *@
+
+@*         <div class="admin-container"> *@
+@*             <!-- Sidebar Navigation --> *@
+@*             <aside class="sidebar"> *@
+@*                 <h2>📚 <a asp-controller="Articles" asp-action="Index">Quản lý Bài viết</a></h2> *@
+@*                 <ul class="sidebar-menu"> *@
+@*                     <li><a asp-controller="Articles" asp-action="Views">📋 Danh sách tất cả bài viết</a></li> *@
+@*                 </ul> *@
+
+@*                 <h2>📊 <a asp-controller="Statistics" asp-action="Index">Thống kê</h2> *@
+@*                 <ul class="sidebar-menu"> *@
+@*                     <li><a asp-controller="Statistics" asp-action="ByAuthor">👥 Theo Tác giả</a></li> *@
+@*                     <li><a asp-controller="Statistics" asp-action="ByTopic">🗃️ Theo Chủ đề</a></li> *@
+@*                     <li><a asp-controller="Statistics" asp-action="ByStatus">✔️ Đã duyệt</a></li> *@
+@*                     <li><a asp-controller="Statistics" asp-action="ByStatus">⏳ Chưa duyệt</a></li> *@
+@*                 </ul> *@
+@*             </aside> *@
+
+@*             <!-- Main Content Area --> *@
+@*             <main class="main-content"> *@
+@*                 <div class="content-header"> *@
+@*                     <h2>📋 Danh sách bài viết</h2> *@
+@*                 </div> *@
+
+@*                 <table class="data-table"> *@
+@*                     <thead> *@
+@*                         <tr> *@
+@*                             <th>ID</th> *@
+@*                             <th>Tiêu đề</th> *@
+@*                             <th>Tác giả</th> *@
+@*                             <th>Ngày đăng</th> *@
+@*                             <th>Trạng thái</th> *@
+@*                             <th>Thao tác</th> *@
+@*                         </tr> *@
+@*                     </thead> *@
+@*                     <tbody> *@
+@*                         <tr> *@
+@*                             <td>1</td> *@
+@*                             <td>Nghiên cứu về AI trong y học</td> *@
+@*                             <td>Nguyễn Văn A</td> *@
+@*                             <td>15/10/2023</td> *@
+@*                             <td class="status-approved">Đã duyệt</td> *@
+@*                             <td> *@
+@*                                 <a href="#" class="action-btn edit-btn">Duyệt</a> *@
+@*                                 <a href="#" class="action-btn delete-btn">Từ chối</a> *@
+@*                             </td> *@
+@*                         </tr> *@
+@*                         </tr> *@
+@*                     </tbody> *@
+@*                 </table> *@
+@*             </main> *@
+@*         </div> *@
+
+@*     </div> *@
+@* </body> *@
+@* </html> *@
+
+@using X.PagedList
+@using X.PagedList.Mvc.Core
+@model IPagedList<ScientificArticleManagement.Models.Article>
+
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<div class="container-fluid">
+    <h1 class="mt-4">@ViewData["Title"]</h1>
+
+    <!-- Thống kê tổng quan -->
+    <div class="row mb-4">
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-primary text-white mb-4">
+                <div class="card-body">
+                    <h5>Tổng bài viết</h5>
+                    <h4>@ViewBag.TotalArticles</h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-warning text-white mb-4">
+                <div class="card-body">
+                    <h5>Chờ duyệt</h5>
+                    <h4>@ViewBag.PendingArticles</h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-success text-white mb-4">
+                <div class="card-body">
+                    <h5>Đã duyệt</h5>
+                    <h4>@ViewBag.ApprovedArticles</h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-danger text-white mb-4">
+                <div class="card-body">
+                    <h5>Từ chối</h5>
+                    <h4>@ViewBag.RejectedArticles</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bộ lọc -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-filter me-1"></i>
+            Bộ lọc bài viết
+        </div>
+        <div class="card-body">
+            <form method="get" class="row g-3">
+                <div class="col-md-4">
+                    <input type="text" name="searchString" class="form-control" placeholder="Tìm kiếm..."
+                           value="@Context.Request.Query["searchString"]">
+                </div>
+                <div class="col-md-2">
+                    <select name="statusFilter" class="form-select">
+                        <option value="">Tất cả trạng thái</option>
+                        @foreach (var status in ViewBag.Statuses)
+                        {
+                            <option value="@status" selected="@(Context.Request.Query["statusFilter"] == status)">
+                                @status
+                            </option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <select name="topicFilter" class="form-select">
+                        <option value="">Tất cả chủ đề</option>
+                        @foreach (var topic in ViewBag.Topics)
+                        {
+                            <option value="@topic.TopicId" selected="@(Context.Request.Query["topicFilter"] == topic.TopicId.ToString())">
+                                @topic.TopicName
+                            </option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <select name="authorFilter" class="form-select">
+                        <option value="">Tất cả tác giả</option>
+                        @foreach (var author in ViewBag.Authors)
+                        {
+                            <option value="@author.UserId" selected="@(Context.Request.Query["authorFilter"] == author.UserId.ToString())">
+                                @author.FullName
+                            </option>
+                        }
+                    </select>
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary">Lọc</button>
+                    <a href="@Url.Action("Index")" class="btn btn-secondary">Xóa lọc</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Danh sách bài viết -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-table me-1"></i>
+            Danh sách bài viết
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Mã bài</th>
+                            <th>Tiêu đề</th>
+                            <th>Tác giả</th>
+                            <th>Chủ đề</th>
+                            <th>Ngày gửi</th>
+                            <th>Trạng thái</th>
+                            <th>Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var article in Model)
+                        {
+                            <tr>
+                                <td>@article.Id</td>
+                                <td>
+                                    <a href="@Url.Action("Details", "Articles", new { id = article.Id })">
+                                        @article.Title
+                                    </a>
+                                </td>
+                                <td>@article.Author?.FullName</td>
+                                <td>@article.Topic?.TopicName</td>
+                                <td>@article.SubmissionDate.ToString("dd/MM/yyyy")</td>
+                                <td>
+                                    <span class="badge @GetStatusBadgeClass(article.Status)">
+                                        @article.Status
+                                    </span>
+                                </td>
+                                <td>
+                                    @if (article.Status == "Pending")
+                                    {
+                                        <form method="post" action="@Url.Action("Approve", "Dashboard")" class="d-inline">
+                                            <input type="hidden" name="id" value="@article.Id" />
+                                            @Html.AntiForgeryToken()
+                                            <button type="submit" class="btn btn-sm btn-success">Duyệt</button>
+                                        </form>
+                                        <form method="post" action="@Url.Action("Reject", "Dashboard")" class="d-inline">
+                                            <input type="hidden" name="id" value="@article.Id" />
+                                            @Html.AntiForgeryToken()
+                                            <button type="submit" class="btn btn-sm btn-danger">Từ chối</button>
+                                        </form>
+                                    }
+                                    <a href="@Url.Action("Details", "Articles", new { id = article.Id })"
+                                       class="btn btn-sm btn-info">Xem</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Phân trang -->
+            @Html.PagedListPager(Model, page => Url.Action("Index", new
+                {
+                    page,
+                    searchString = Context.Request.Query["searchString"],
+                    statusFilter = Context.Request.Query["statusFilter"],
+                    topicFilter = Context.Request.Query["topicFilter"],
+                    authorFilter = Context.Request.Query["authorFilter"]
+                }))
+        </div>
+    </div>
+
+    <!-- Thống kê theo tác giả -->
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="fas fa-chart-bar me-1"></i>
+                    Thống kê bài viết theo tác giả
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Tác giả</th>
+                                    <th>Tổng bài</th>
+                                    <th>Chờ duyệt</th>
+                                    <th>Đã duyệt</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var stat in ViewBag.AuthorsStats)
+                                {
+                                    <tr>
+                                        <td>@stat.AuthorName</td>
+                                        <td>@stat.ArticleCount</td>
+                                        <td>@stat.PendingCount</td>
+                                        <td>@stat.ApprovedCount</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Thống kê theo chủ đề -->
+        <div class="col-lg-6">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="fas fa-chart-pie me-1"></i>
+                    Thống kê bài viết theo chủ đề
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Chủ đề</th>
+                                    <th>Tổng bài</th>
+                                    <th>Chờ duyệt</th>
+                                    <th>Đã duyệt</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var stat in ViewBag.TopicsStats)
+                                {
+                                    <tr>
+                                        <td>@stat.TopicName</td>
+                                        <td>@stat.ArticleCount</td>
+                                        <td>@stat.PendingCount</td>
+                                        <td>@stat.ApprovedCount</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@functions {
+    public string GetStatusBadgeClass(string status)
+    {
+        return status switch
+        {
+            "Pending" => "bg-warning",
+            "Approved" => "bg-success",
+            "Rejected" => "bg-danger",
+            _ => "bg-secondary"
+        };
+    }
+}
+
+@section Styles {
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
+    <style>
+        .badge {
+            font-size: 0.9em;
+            padding: 0.35em 0.65em;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        .pagination {
+            justify-content: center;
+            margin-top: 20px;
+        }
+    </style>
+}
