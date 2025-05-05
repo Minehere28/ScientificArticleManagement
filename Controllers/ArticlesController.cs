@@ -246,14 +246,6 @@ namespace ScientificArticleManagement.Controllers
                 TempData["Error"] = "❌ Không thể sửa bài đã duyệt/từ chối.";
                 return RedirectToAction("MyArticles", new { id = article.UserId });
             }
-            //ModelState.Remove("UserId");
-            //ModelState.Remove("Topic");
-            //ModelState.Remove("Status");
-            //ModelState.Remove("Author");
-
-            //ModelState.Clear(); // Xóa toàn bộ ModelState trước
-            //TryValidateModel(article);
-
             // Tạo model mới chỉ với các trường cần thiết
             var modelToUpdate = new Article
             {

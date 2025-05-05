@@ -4,50 +4,297 @@
 }
 
 <!DOCTYPE html>
-<html>
+<html lang="vi">
 <head>
     <meta charset="utf-8" />
-    <title>Login</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Welcome to PaperHub</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --accent-color: #4895ef;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+        }
+
         body {
-            background: #f0f2f5;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--dark-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+            body::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: url('https://images.unsplash.com/photo-1532094349884-543bc11b234d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80') no-repeat center center;
+                background-size: cover;
+                opacity: 0.15;
+                z-index: -1;
+            }
+
+        .login-container {
+            width: 100%;
+            max-width: 420px;
+            padding: 2rem;
         }
 
         .login-card {
-            border-radius: 1rem;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+            .login-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            }
+
+        .login-header {
+            text-align: center;
+            padding: 1.5rem 0;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            margin: -1rem -1rem 2rem -1rem;
+        }
+
+            .login-header h2 {
+                margin: 0;
+                font-weight: 600;
+                font-size: 1.8rem;
+            }
+
+        .login-body {
+            padding: 0 1.5rem 1.5rem;
+        }
+
+        .form-control {
+            border-radius: 50px;
+            padding: 12px 20px;
+            border: 1px solid #e0e6ed;
+            transition: all 0.3s;
+        }
+
+            .form-control:focus {
+                border-color: var(--accent-color);
+                box-shadow: 0 0 0 3px rgba(72, 149, 239, 0.2);
+            }
+
+        .input-group-text {
+            border-radius: 50px 0 0 50px;
+            background-color: transparent;
+            border-right: none;
+        }
+
+        .form-floating > .form-control:not(:placeholder-shown) ~ label {
+            transform: scale(0.85) translateY(-1.1rem) translateX(1.5rem);
+            color: var(--accent-color);
+        }
+
+        .btn-login {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            border-radius: 50px;
+            padding: 12px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: all 0.3s;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+            .btn-login:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 5px 15px rgba(67, 97, 238, 0.4);
+            }
+
+        .login-footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+
+            .login-footer a {
+                color: var(--primary-color);
+                text-decoration: none;
+                font-weight: 500;
+                transition: color 0.3s;
+            }
+
+                .login-footer a:hover {
+                    color: var(--secondary-color);
+                    text-decoration: underline;
+                }
+
+        .floating-shapes {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+            .floating-shapes div {
+                position: absolute;
+                display: block;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.1);
+                animation: animate 25s linear infinite;
+                bottom: -150px;
+            }
+
+                .floating-shapes div:nth-child(1) {
+                    left: 25%;
+                    width: 80px;
+                    height: 80px;
+                    animation-delay: 0s;
+                }
+
+                .floating-shapes div:nth-child(2) {
+                    left: 10%;
+                    width: 60px;
+                    height: 60px;
+                    animation-delay: 2s;
+                    animation-duration: 12s;
+                }
+
+                .floating-shapes div:nth-child(3) {
+                    left: 70%;
+                    width: 100px;
+                    height: 100px;
+                    animation-delay: 4s;
+                }
+
+                .floating-shapes div:nth-child(4) {
+                    left: 40%;
+                    width: 50px;
+                    height: 50px;
+                    animation-delay: 0s;
+                    animation-duration: 18s;
+                }
+
+                .floating-shapes div:nth-child(5) {
+                    left: 65%;
+                    width: 70px;
+                    height: 70px;
+                    animation-delay: 0s;
+                }
+
+                .floating-shapes div:nth-child(6) {
+                    left: 75%;
+                    width: 110px;
+                    height: 110px;
+                    animation-delay: 3s;
+                }
+
+                .floating-shapes div:nth-child(7) {
+                    left: 35%;
+                    width: 150px;
+                    height: 150px;
+                    animation-delay: 7s;
+                }
+
+                .floating-shapes div:nth-child(8) {
+                    left: 50%;
+                    width: 45px;
+                    height: 45px;
+                    animation-delay: 15s;
+                    animation-duration: 45s;
+                }
         }
     </style>
 </head>
 <body>
-    <div class="container d-flex justify-content-center align-items-center min-vh-100">
-        <div class="card login-card p-4 col-md-6 bg-white">
-            <h3 class="text-center mb-4 text-primary">Đăng nhập</h3>
+    <!-- Floating background shapes -->
+    <div class="floating-shapes">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
 
-            @if (ViewBag.Error != null)
-            {
-                <div class="alert alert-danger">@ViewBag.Error</div>
-            }
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <h2><i class="fas fa-sign-in-alt me-2"></i> ĐĂNG NHẬP</h2>
+            </div>
 
-            <form asp-action="Login" method="post">
-                <div class="mb-3">
-                    <label class="form-label">Username</label>
-                    <input name="username" class="form-control rounded-pill" required />
-                </div>
+            <div class="login-body">
+                @if (ViewBag.Error != null)
+                {
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        @ViewBag.Error
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                }
 
-                <div class="mb-3">
-                    <label class="form-label">Password</label>
-                    <input name="password" type="password" class="form-control rounded-pill" required />
-                </div>
+                <form asp-action="Login" method="post">
+                    <div class="mb-4">
+                        <div class="input-group">
+                            <span class="input-group-text bg-transparent"><i class="fas fa-user"></i></span>
+                            <input name="username" type="text" class="form-control" placeholder="Tên đăng nhập" required>
+                        </div>
+                    </div>
 
-                <button type="submit" class="btn btn-primary w-100 rounded-pill">Đăng nhập</button>
+                    <div class="mb-4">
+                        <div class="input-group">
+                            <span class="input-group-text bg-transparent"><i class="fas fa-lock"></i></span>
+                            <input name="password" type="password" class="form-control" placeholder="Mật khẩu" required>
+                        </div>
+                    </div>
 
-                <div class="text-center mt-3">
-                    <a href="@Url.Action("Register", "Account")">Chưa có tài khoản? Đăng ký</a>
-                </div>
-            </form>
+                    <div class="d-grid mb-3">
+                        <button type="submit" class="btn btn-login text-white">
+                            <i class="fas fa-sign-in-alt me-2"></i> ĐĂNG NHẬP
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="login-footer py-3">
+                <p>Chưa có tài khoản? <a href="@Url.Action("Register", "Account")">Đăng ký ngay</a></p>
+                <p class="mt-2">© @DateTime.Now.Year - PaperHub</p>
+            </div>
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Thêm hiệu ứng khi load trang
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginCard = document.querySelector('.login-card');
+            loginCard.style.opacity = '0';
+            loginCard.style.transform = 'translateY(20px)';
+
+            setTimeout(() => {
+                loginCard.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                loginCard.style.opacity = '1';
+                loginCard.style.transform = 'translateY(0)';
+            }, 100);
+        });
+    </script>
 </body>
 </html>
